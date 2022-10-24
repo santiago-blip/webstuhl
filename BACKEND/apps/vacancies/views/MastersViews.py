@@ -3,10 +3,10 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from apps.vacancies.models import (Languages, Areas, Levels, Profession, ProfessionDegree,InternalContacts,
-InternalRelationsObjetives,ExternalContacts,ExternalRelationsObjetives)
+InternalRelationsObjetives,ExternalContacts,ExternalRelationsObjetives,LevelsAreas)
 
-from apps.vacancies.serializers.MastersSerializer import (LanguagesSerializer,AreasSerializer,LevelsSerializer, ProfessionSerializer,
-ProfessionDegreeSerializer, InternalContactsSerializer,InternalRelationsObjetivesSerializer, ExternalContactsSerializer, ExternalRelationsObjetivesSerializer)
+from apps.vacancies.serializers.MastersSerializer import (LanguagesSerializer,AreasSerializer,LevelsSerializer, ProfessionSerializer,LevelsAreasSerializer,
+ProfessionDegreeSerializer, InternalContactsSerializer,InternalRelationsObjetivesSerializer, ExternalContactsSerializer, ExternalRelationsObjetivesSerializer, AreasFromLevelsSerializer)
 
 class LanguagesMasterView(APIView):
 
@@ -101,6 +101,13 @@ class AreasMasterView(APIView):
 class LevelMasterView(APIView):
 
     def get(self,request,pk=None):
+
+        if request.query_params.get('get_area_level'):
+            query = Levels.objects.filter(id=request.query_params.get('get_area_level')).last()
+            if not query:
+                return Response({'error':'Nivel no encontrado.'},status=status.HTTP_400_BAD_REQUEST)
+            serializedQuery = AreasFromLevelsSerializer(query)
+            return Response({'response':serializedQuery.data},status=status.HTTP_200_OK)
         if pk:
             query = Levels.objects.filter(id=pk).first()
             if not query:
@@ -137,6 +144,79 @@ class LevelMasterView(APIView):
             return Response({'error':'id no válido.'},status=status.HTTP_400_BAD_REQUEST)
         
         query = Levels.objects.filter(id=pk).first()
+        if not query:
+            return Response({'error':'id no encontrado.'},status=status.HTTP_400_BAD_REQUEST)
+        
+        query.delete()
+        return Response({'response':'Eliminado con éxito.'},status=status.HTTP_200_OK)
+
+class LevelsAreasMasterView(APIView):
+
+    def get(self,request,pk=None,*args,**kwargs):
+
+        #FILTER BY LEVEL
+        if request.query_params.get('level_id__in'):
+            params = request.query_params.get('level_id__in')
+            params = tuple(params.replace(',',''))
+            query = LevelsAreas.objects.filter(level_id__in=params)
+            if not query:
+                return Response({'error':'Item no encontrado.'},status=status.HTTP_400_BAD_REQUEST)
+            serializedQuery = LevelsAreasSerializer(query, many = True)
+            return Response({'response':serializedQuery.data},status=status.HTTP_200_OK)
+        if request.query_params.get('level_id'):
+            query = LevelsAreas.objects.filter(level_id=request.query_params.get('level_id'))
+            if not query:
+                return Response({'error':'Item no encontrado.'},status=status.HTTP_400_BAD_REQUEST)
+            serializedQuery = LevelsAreasSerializer(query,many = True)
+            return Response({'response':serializedQuery.data},status=status.HTTP_200_OK)
+
+        #FILTER BY AREA
+        if request.query_params.get('area_id__in'):
+            params = request.query_params.get('area_id__in')
+            params = tuple(params.replace(',',''))
+            query = LevelsAreas.objects.filter(area_id__in=params)
+            if not query:
+                return Response({'error':'Item no encontrado.'},status=status.HTTP_400_BAD_REQUEST)
+            serializedQuery = LevelsAreasSerializer(query, many = True)
+            return Response({'response':serializedQuery.data},status=status.HTTP_200_OK)
+        if request.query_params.get('area_id'):
+            query = LevelsAreas.objects.filter(area_id=request.query_params.get('area_id'))
+            if not query:
+                return Response({'error':'Item no encontrado.'},status=status.HTTP_400_BAD_REQUEST)
+            serializedQuery = LevelsAreasSerializer(query,many = True)
+            return Response({'response':serializedQuery.data},status=status.HTTP_200_OK)
+
+        #ALL OBJECTS
+        query = LevelsAreas.objects.all()
+        if not query:
+            return Response({'error':'No hay item.'},status=status.HTTP_400_BAD_REQUEST)
+        serializedQuery = LevelsAreasSerializer(query,many = True)
+        return Response({'response':serializedQuery.data},status=status.HTTP_200_OK)
+    
+    def post(self,request):
+        data = LevelsAreasSerializer(data=request.data)
+        data.is_valid(raise_exception=True)
+        data.save()
+        return Response({'response':'Creado con éxito.'},status=status.HTTP_201_CREATED)
+    
+    def put(self,request,pk=None):
+        if not pk:
+            return Response({'error':'id no válido.'},status=status.HTTP_400_BAD_REQUEST)
+        
+        query = LevelsAreas.objects.filter(id=pk).first()
+        if not query:
+            return Response({'error':'id no encontrado.'},status=status.HTTP_400_BAD_REQUEST)
+            
+        serializedQuery = LevelsAreasSerializer(query,data=request.data)
+        serializedQuery.is_valid(raise_exception=True)
+        serializedQuery.save()
+        return Response({'response':'Actualizado con éxito.'},status=status.HTTP_200_OK)
+    
+    def delete(self,request,pk=None):
+        if not pk:
+            return Response({'error':'id no válido.'},status=status.HTTP_400_BAD_REQUEST)
+        
+        query = LevelsAreas.objects.filter(id=pk).first()
         if not query:
             return Response({'error':'id no encontrado.'},status=status.HTTP_400_BAD_REQUEST)
         

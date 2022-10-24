@@ -1,5 +1,5 @@
 from django.urls import path
-from apps.vacancies.views.MastersViews import (LanguagesMasterView,AreasMasterView, LevelMasterView,ProfessionMasterView,ProfessionDegreeMasterView,
+from apps.vacancies.views.MastersViews import (LanguagesMasterView,AreasMasterView, LevelMasterView,ProfessionMasterView,ProfessionDegreeMasterView,LevelsAreasMasterView,
 InternalContactsMasterView,InternalRelationsObjetivesMasterView,ExternalContactsMasterView,ExternalRelationsObjetivesMasterView)
 
 urlpatterns = [
@@ -9,6 +9,8 @@ urlpatterns = [
     path('master/areas/<int:pk>/',AreasMasterView.as_view(),name="masterAreaId"),
     path('master/levels/',LevelMasterView.as_view(),name="masterLevel"),
     path('master/levels/<int:pk>/',LevelMasterView.as_view(),name="masterLevelId"),
+    path('master/levels-areas/',LevelsAreasMasterView.as_view(),name="master-level-areas"),
+    # path('master/levels-areas/<int:pk>/',LevelsAreasMasterView.as_view(),name="master-level-areasId"),
     path('master/professions/',ProfessionMasterView.as_view(),name="masterProfession"),
     path('master/professions/<int:pk>/',ProfessionMasterView.as_view(),name="masterProfessionId"),
     path('master/professionsDegree/',ProfessionDegreeMasterView.as_view(),name="masterProfessionDegree"),

@@ -1,6 +1,21 @@
 from rest_framework import serializers
-from apps.vacancies.models import (Languages, Areas, Levels, Profession, ProfessionDegree, InternalContacts, InternalRelationsObjetives,
+from apps.vacancies.models import (Languages, Areas, Levels, Profession, ProfessionDegree, InternalContacts, InternalRelationsObjetives,LevelsAreas,
 ExternalContacts,ExternalRelationsObjetives)
+
+
+#Permitir seleccionar los fields en serializadores:
+class DynamicFieldsModelSerializer(serializers.ModelSerializer):
+    def __init__(self, *args, **kwargs):
+
+        fields = kwargs.pop('fields', None)
+        super().__init__(*args, **kwargs)
+
+        if fields is not None:
+            allowed = set(fields)
+            existing = set(self.fields)
+            for field_name in existing - allowed:
+                self.fields.pop(field_name)
+
 
 class LanguagesSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,6 +32,17 @@ class LevelsSerializer(serializers.ModelSerializer):
         model = Levels
         fields = '__all__'
 
+class LevelsAreasSerializer(DynamicFieldsModelSerializer):
+    area_id = AreasSerializer()
+    class Meta:
+        model = LevelsAreas
+        fields = '__all__'
+
+class AreasFromLevelsSerializer(serializers.ModelSerializer):
+    areas = LevelsAreasSerializer(source='levelsareas_set',many = True,fields=('area_id',))
+    class Meta:
+        model = Levels
+        fields = '__all__'
 class ProfessionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profession
