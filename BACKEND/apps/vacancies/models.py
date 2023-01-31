@@ -70,7 +70,13 @@ class VacanciesLevels(models.Model):
 
 class Languages(models.Model):
     language_name = models.CharField(max_length=255)
+
+class LanguagesLevels(models.Model):
     language_level = models.CharField(max_length=2)
+
+class LanguagesLanguagesLevels(models.Model):
+    language_id = models.ForeignKey(Languages,on_delete=models.CASCADE)
+    language_level_id = models.ForeignKey(LanguagesLevels,on_delete=models.CASCADE)
 
 class LevelsAreas(models.Model):# nivel tiene muchas areas
     area_id = models.ForeignKey(Areas,on_delete=models.CASCADE)

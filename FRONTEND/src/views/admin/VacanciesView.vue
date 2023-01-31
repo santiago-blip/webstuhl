@@ -2,7 +2,9 @@
 import { ref } from 'vue'
 import { useStorePositionsDetails } from '@/store/vacancies/positionsDetails.js'
 import CreateVacancieModal from '@/components/admin/utilities/CreateVacancieModal.vue'
-import Cards from '@/components/public/Cards.vue';
+import Cards from '@/components/public/Cards.vue'
+import DeleteModal from '@/components/admin/utilities/DeleteModal.vue'
+
 
     const columns = [
                         {
@@ -106,7 +108,7 @@ import Cards from '@/components/public/Cards.vue';
             <span><b>Vacantes</b></span>
             <q-space />
             <!-- <q-btn @click="openModalCreateVacancie" color="primary" icon="add" label="Nueva vacante"/> -->
-            <q-btn @click="showModalVacancies = true" color="primary" icon="add" label="Nueva vacante" no-caps/>
+            <q-btn @click="showModalVacancies = true" color="primary" icon="add" :label="$t('newVacancie')" no-caps/>
         </template>
         <template v-slot:body="props">
           <q-tr :props="props">
@@ -142,21 +144,10 @@ import Cards from '@/components/public/Cards.vue';
         </template>
       </q-table>
     </div>
-    <q-dialog v-model="showModalDelete" persistent>
-      <q-card>
-        <q-card-section class="row items-center">
-          <q-avatar icon="warning" color="red" text-color="white" />
-          <span class="q-ml-sm">¿Seguro que quiere eliminar la vacante?</span>
-        </q-card-section>
-
-        <q-card-actions align="right">
-          <q-btn flat label="Cancelar" color="primary" no-caps v-close-popup />
-          <q-btn  label="Sí, eliminar" color="red" no-caps @click="deleteVacancie(dataToDelete)"/>
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
+    <!-- <DeleteModal/> -->
     <div v-if="showModalVacancies">
       <CreateVacancieModal :vacancieData="dataVacancie" :showModalVacancies="showModalVacancies" @closeModalVacancies="closeModalVacancies"></CreateVacancieModal>
     </div>
 
+    <Cards></Cards>
   </template>

@@ -32,7 +32,7 @@ const routes = [
             {
               path: 'vacancies',
               name: 'vacancies',
-              component: () => import( '@/views/admin/Vacancies.vue' )
+              component: () => import( '@/views/admin/VacanciesView.vue' )
             },
             {
               path: '/masters',
@@ -40,8 +40,53 @@ const routes = [
               children:[
                   {
                     path: 'languages',
-                    name: 'LanguagesMaster',
-                    component: () => import( '@/components/admin/LanguagesMaster.vue' )
+                    name: 'languagesMaster',
+                    component: () => import( '@/views/admin/masters/LanguagesMasterView.vue' )
+                  },
+                  {
+                    path: 'languages-levels',
+                    name: 'languagesLevelsMaster',
+                    component: () => import( '@/views/admin/masters/LanguagesLevelsMasterView.vue' )
+                  },
+                  {
+                    path: 'areas',
+                    name: 'areasMaster',
+                    component: () => import( '@/views/admin/masters/AreasMasterView.vue' )
+                  },
+                  {
+                    path: 'levels',
+                    name: 'levelsMaster',
+                    component: () => import( '@/views/admin/masters/LevelsMasterView.vue' )
+                  },
+                  {
+                    path: 'professions',
+                    name: 'professionsMaster',
+                    component: () => import( '@/views/admin/masters/ProfessionsMasterView.vue' )
+                  },
+                  {
+                    path: 'professionsDegree',
+                    name: 'professionsDegreeMaster',
+                    component: () => import( '@/views/admin/masters/ProfessionsDegreeMasterView.vue' )
+                  },
+                  {
+                    path: 'internal-contact',
+                    name: 'InternalContactMaster',
+                    component: () => import( '@/views/admin/masters/InternalContactMasterView.vue' )
+                  },
+                  {
+                    path: 'internal-contact-objetive',
+                    name: 'InternalContactObjetiveMaster',
+                    component: () => import( '@/views/admin/masters/InternalContactObjetiveMasterView.vue' )
+                  },
+                  {
+                    path: 'external-contact',
+                    name: 'ExternalContactMaster',
+                    component: () => import( '@/views/admin/masters/ExternalContactMasterView.vue' )
+                  },
+                  {
+                    path: 'external-contact-objetive',
+                    name: 'ExternalContactObjetiveMaster',
+                    component: () => import( '@/views/admin/masters/ExternalContactObjetiveMasterView.vue' )
                   }
                 ]
             },

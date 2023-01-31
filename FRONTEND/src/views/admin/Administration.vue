@@ -15,42 +15,7 @@
       router.push({name:'landing'})
     }
     // console.log(t('master'))
-    const simple = [
-        {
-          label: 'Maestros',
-          children: [
-            {
-              label: 'Lenguajes',
-              icon: 'public',
-              // children: [
-              //   { label: 'Quality ingredients' },
-              //   { label: 'Good recipe' }
-              // ]
-            },
-            {
-              label: 'Good service (disabled node with icon)',
-              icon: 'room_service',
-              disabled: true,
-              children: [
-                { label: 'Prompt attention' },
-                { label: 'Professional waiter' }
-              ]
-            },
-            {
-              label: 'Pleasant surroundings (with icon)',
-              icon: 'photo',
-              children: [
-                {
-                  label: 'Happy atmosphere (with image)',
-                  img: 'https://cdn.quasar.dev/img/logo_calendar_128px.png'
-                },
-                { label: 'Good table presentation' },
-                { label: 'Pleasing decor' }
-              ]
-            }
-          ]
-        }
-      ]
+
 </script>
 <template>
     <div>
@@ -82,7 +47,7 @@
                         :label="$t('master')"
                       >
                       <q-card>
-                        <q-item clickable v-ripple :to="{ name: 'vacancies' }" active-class="active-class" exact>
+                        <q-item clickable v-ripple :to="{ name: 'professionsMaster' }" active-class="active-class" exact>
                             <q-item-section avatar>
                               <q-icon name="public" />
                             </q-item-section>
@@ -90,7 +55,7 @@
                                 {{$t('profession')}}
                             </q-item-section>
                         </q-item>
-                        <q-item clickable v-ripple :to="{ name: 'vacancies' }" active-class="active-class" exact>
+                        <q-item clickable v-ripple :to="{ name: 'professionsDegreeMaster' }" active-class="active-class" exact>
                             <q-item-section avatar>
                               <q-icon name="public" />
                             </q-item-section>
@@ -98,7 +63,7 @@
                                 {{$t('professionDegree')}}
                             </q-item-section>
                         </q-item>
-                        <q-item clickable v-ripple :to="{ name: 'LanguagesMaster' }" active-class="active-class" exact>
+                        <q-item clickable v-ripple :to="{ name: 'languagesMaster' }" active-class="active-class" exact>
                             <q-item-section avatar>
                               <q-icon name="public" />
                             </q-item-section>
@@ -106,7 +71,15 @@
                                 {{$t('languages')}}
                             </q-item-section>
                         </q-item>
-                        <q-item clickable v-ripple :to="{ name: 'vacancies' }" active-class="active-class" exact>
+                        <q-item clickable v-ripple :to="{ name: 'languagesLevelsMaster' }" active-class="active-class" exact>
+                            <q-item-section avatar>
+                              <q-icon name="public" />
+                            </q-item-section>
+                            <q-item-section>
+                                {{$t('languagesLevels')}}
+                            </q-item-section>
+                        </q-item>
+                        <q-item clickable v-ripple :to="{ name: 'areasMaster' }" active-class="active-class" exact>
                             <q-item-section avatar>
                               <q-icon name="public" />
                             </q-item-section>
@@ -114,7 +87,7 @@
                                 {{$t('area')}}
                             </q-item-section>
                         </q-item>
-                        <q-item clickable v-ripple :to="{ name: 'vacancies' }" active-class="active-class" exact>
+                        <q-item clickable v-ripple :to="{ name: 'levelsMaster' }" active-class="active-class" exact>
                             <q-item-section avatar>
                               <q-icon name="public" />
                             </q-item-section>
@@ -122,7 +95,7 @@
                                 {{$t('level')}}
                             </q-item-section>
                         </q-item>
-                        <q-item clickable v-ripple :to="{ name: 'vacancies' }" active-class="active-class" exact>
+                        <q-item clickable v-ripple :to="{ name: 'InternalContactMaster' }" active-class="active-class" exact>
                             <q-item-section avatar>
                               <q-icon name="public" />
                             </q-item-section>
@@ -130,7 +103,7 @@
                                 {{$t('internalContact')}}
                             </q-item-section>
                         </q-item>
-                        <q-item clickable v-ripple :to="{ name: 'vacancies' }" active-class="active-class" exact>
+                        <q-item clickable v-ripple :to="{ name: 'InternalContactObjetiveMaster' }" active-class="active-class" exact>
                             <q-item-section avatar>
                               <q-icon name="public" />
                             </q-item-section>
@@ -138,7 +111,7 @@
                                 {{$t('internalContactObjetives')}}
                             </q-item-section>
                         </q-item>
-                        <q-item clickable v-ripple :to="{ name: 'vacancies' }" active-class="active-class" exact>
+                        <q-item clickable v-ripple :to="{ name: 'ExternalContactMaster' }" active-class="active-class" exact>
                             <q-item-section avatar>
                               <q-icon name="public" />
                             </q-item-section>
@@ -146,7 +119,7 @@
                                 {{$t('externalContact')}}
                             </q-item-section>
                         </q-item>
-                        <q-item clickable v-ripple :to="{ name: 'vacancies' }" active-class="active-class" exact>
+                        <q-item clickable v-ripple :to="{ name: 'ExternalContactObjetiveMaster' }" active-class="active-class" exact>
                             <q-item-section avatar>
                               <q-icon name="public" />
                             </q-item-section>
